@@ -1,0 +1,19 @@
+.blogHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  padding: 40px 90px;
+  background-color: gray;
+
+  ul {
+    display: flex;
+    gap: 25px;
+    color: white;
+    font-size: 20px;
+
+    a:hover {
+      color: #bbb;
+    }
+  }
+}
