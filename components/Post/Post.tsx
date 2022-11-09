@@ -1,15 +1,11 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { IPost } from '../../models/posts';
+
 import style from './Post.module.scss';
 
 interface PostProps {
-  post: {
-    title: string,
-    image: string,
-    excerpt: string,
-    date: Date | number,
-    slug: string,
-  }
+  post: IPost
 }
 
 function Post({ post }: PostProps) {
@@ -20,16 +16,18 @@ function Post({ post }: PostProps) {
     month: 'long',
     year: 'numeric',
   });
-  const imagePath = `/images/posts/${slug}/${image}`;
+  const imagePath = `/images/posts/${image}`;
+  const linkPath = `/posts/${slug}`;
 
   return <li className={style.post}>
-    <Link href="">
+    <Link href={linkPath}>
       <div className={style.image}>
         <Image
           alt={title}
           src={imagePath}
           width={300}
           height={300}
+          layout="responsive"
         />
       </div>
       <div className={style.content}>

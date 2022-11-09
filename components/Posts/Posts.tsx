@@ -1,13 +1,14 @@
 import Post from "../Post/Post";
 import style from './Posts.module.scss';
+import { IPost } from '../../models/posts';
 
 interface PostsProps {
-  posts: [],
+  posts: IPost[],
 }
 
 function Posts({ posts }: PostsProps) {
   return <ul className={style.grid}>
-    {posts.map(post => <Post post={post} />)}
+    {posts.map((post: IPost) => <Post key={post.slug} post={post} />)}
   </ul>
 }
 
