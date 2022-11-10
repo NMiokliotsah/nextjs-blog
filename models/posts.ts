@@ -4,4 +4,5 @@ export interface IPost {
   excerpt: string,
   date: Date | number | string,
   slug: string,
+  isFeatured: boolean,
 }
