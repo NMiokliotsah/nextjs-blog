@@ -1,31 +1,20 @@
 import AllPosts from "../../components/AllPosts/AllPosts";
+import { getAllPosts } from "../../helpers/post";
 
-const DUMMY_DATE = [
-  {
-    title: 'Getting Started with Next js',
-    image: 'getting-started-nextjs.png',
-    excerpt: 'Next js is a React framework',
-    slug: 'getting-started-with-nextjs',
-    date: '2022-02-10',
-  },
-  {
-    title: 'Getting Started with Next js',
-    image: 'getting-started-nextjs.png',
-    excerpt: 'Next js is a React framework',
-    slug: 'getting-started-with-nextjs',
-    date: '2022-02-10',
-  },
-  {
-    title: 'Getting Started with Next js',
-    image: 'getting-started-nextjs.png',
-    excerpt: 'Next js is a React framework',
-    slug: 'getting-started-with-nextjs',
-    date: '2022-02-10',
+
+function AllPostsPage({ posts }) {
+  return <AllPosts posts={posts} />
+}
+
+export function getStaticProps() {
+  const allPosts = getAllPosts();
+
+  return {
+    props: {
+      posts: allPosts,
+    },
+    revalidate: 100,
   }
-];
-
-function AllPostsPage() {
-  return <AllPosts posts={DUMMY_DATE}/>
 }
 
 export default AllPostsPage;

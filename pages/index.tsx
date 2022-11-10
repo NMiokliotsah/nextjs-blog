@@ -1,36 +1,27 @@
 import FeaturedPosts from '../components/FeaturedPosts/FeaturedPosts';
 import Hero from '../components/Hero/Hero';
+import { getFeaturedPosts } from '../helpers/post';
+
 import styles from '../styles/Home.module.css'
 
-const DUMMY_DATE = [
-  {
-    title: 'Getting Started with Next js',
-    image: 'getting-started-nextjs.png',
-    excerpt: 'Next js is a React framework',
-    slug: 'getting-started-with-nextjs',
-    date: '2022-02-10',
-  },
-  {
-    title: 'Getting Started with Next js',
-    image: 'getting-started-nextjs.png',
-    excerpt: 'Next js is a React framework',
-    slug: 'getting-started-with-nextjs',
-    date: '2022-02-10',
-  },
-  {
-    title: 'Getting Started with Next js',
-    image: 'getting-started-nextjs.png',
-    excerpt: 'Next js is a React framework',
-    slug: 'getting-started-with-nextjs',
-    date: '2022-02-10',
-  }
-]
 
-function Home() {
+function Home({ posts }) {
   return <>
     <Hero />
-    <FeaturedPosts posts={DUMMY_DATE} />
+    <FeaturedPosts posts={posts} />
   </>
+}
+
+
+export function getStaticProps() {
+  const featuredPosts = getFeaturedPosts();
+
+  return {
+    props: {
+      posts: featuredPosts
+    },
+    revalidate: 100,
+  }
 }
 
 export default Home;

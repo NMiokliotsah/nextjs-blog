@@ -1,9 +1,9 @@
 ---
-  title: 'Getting Started with Next js',
-  image: 'getting-started-nextjs.png',
-  excerpt: 'Next js is a React framework',
-  slug: 'getting-started-with-nextjs',
-  date: '2022-02-10',
+  title: 'Getting Started with Next js'
+  image: 'getting-started-nextjs.png'
+  excerpt: 'Next js is a React framework'
+  slug: 'getting-started-with-nextjs'
+  date: '2022-02-17'
   isFeatured: true
 ---
 

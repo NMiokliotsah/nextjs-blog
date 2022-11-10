@@ -10,23 +10,20 @@ function getPostData(fileName: string) {
   const fileContent = fs.readFileSync(filePath, 'utf-8');
   const { data, content } = matter(fileContent);
 
-  const slug = fileName.replace(/\.md$/, '');
-
   return {
-    slug,
-    ...data,
     content,
+    ...data as IPost,
   };
 }
 
-function getAllPosts() {
-  const postFiles = fs.readFileSync(postDirectory);
+export function getAllPosts() {
+  const postFiles = fs.readdirSync(postDirectory);
 
   return postFiles.map((post) => getPostData(post))
     .sort((a, b) => a.date > b.date ? -1 : 1);
 }
 
-function getFeaturedPosts() {
+export function getFeaturedPosts() {
   const allPosts = getAllPosts();
 
   return allPosts.filter((post) => post.isFeatured);
