@@ -5,8 +5,13 @@ import { IPost } from '../models/posts';
 
 const postDirectory = path.join(process.cwd(), 'posts');
 
-function getPostData(fileName: string) {
-  const filePath = path.join(postDirectory, fileName);
+export function getAllFiles() {
+  return fs.readdirSync(postDirectory);
+}
+
+export function getPostData(id: string) {
+  const postSlug = id.replace(/\.md$/, '');
+  const filePath = path.join(postDirectory, `${postSlug}.md`);
   const fileContent = fs.readFileSync(filePath, 'utf-8');
   const { data, content } = matter(fileContent);
 
@@ -17,7 +22,7 @@ function getPostData(fileName: string) {
 }
 
 export function getAllPosts() {
-  const postFiles = fs.readdirSync(postDirectory);
+  const postFiles = getAllFiles();
 
   return postFiles.map((post) => getPostData(post))
     .sort((a, b) => a.date > b.date ? -1 : 1);
