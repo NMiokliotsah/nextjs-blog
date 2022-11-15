@@ -1,5 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
+import {
+  closeConnectionDb,
+  connectToDatabase,
+  getCollection,
+} from '../../helpers/db';
+
 type Data = {
   email?: string,
   name?: string,
@@ -7,7 +13,7 @@ type Data = {
   message: string,
 }
 
-function handler(
+async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
@@ -17,17 +23,32 @@ function handler(
 
     if (isNotValid) {
       res.status(422).json({ message: 'Invalid input.' });
+
+      return;
     }
 
     const newMessage = {
       email,
       name,
       message,
+    };
+
+    try {
+      const db = await connectToDatabase();
+      const collection = await getCollection(db, 'messages');
+
+      collection.insertOne(newMessage);
+
+      res
+      .status(201)
+      .json({ message: 'Successfully stored message!', storedMessage: newMessage });
+    } catch(e) {
+      res
+        .status(500)
+        .json({ message: e as string});
+    } finally {
+      closeConnectionDb();
     }
-
-    console.log(newMessage);
-
-    res.status(201).json({ message: 'Successfully stored message!', storedMessage: newMessage });
   }
 }
 
