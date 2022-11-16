@@ -2,7 +2,7 @@ import { MongoClient } from 'mongodb';
 
 async function getClient() {
   try {
-    const client = await MongoClient.connect('mongodb+srv://nm:BsLZuD0CsyRYJjPW@cluster0.56btp6p.mongodb.net/blog?retryWrites=true&w=majority');
+    const client = await MongoClient.connect(process.env.DB_URL as string);
 
     return client;
   } catch (e) {

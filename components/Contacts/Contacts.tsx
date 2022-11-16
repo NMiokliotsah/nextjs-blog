@@ -1,25 +1,49 @@
 import { useRef } from 'react';
+import Notification from '../Notification/Notification';
 import style from './Contacts.module.scss';
+import { useNotification } from '../../hooks/useNotification';
+
+const sendMessage = async (email: string, name: string, message: string) => {
+  const response = await fetch('/api/contact', {
+    method: 'POST',
+    body: JSON.stringify({
+      email,
+      name,
+      message,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || 'Something went wrong!');
+  }
+}
 
 function ContactForm() {
   const emailRef = useRef();
   const nameRef = useRef();
   const messageRef = useRef();
 
-  const handleSubmit = (e) => {
+  const [notification, setRequestStatus] = useNotification();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    fetch('/api/contact', {
-      method: 'POST',
-      body: JSON.stringify({
-        email: emailRef!.current!.value,
-        name: nameRef!.current!.value,
-        message: messageRef!.current!.value,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    });
+    try {
+      setRequestStatus('pending');
+      const email = emailRef!.current!.value;
+      const name = nameRef!.current!.value;
+      const message = messageRef!.current!.value;
+
+      await sendMessage(email, name, message);
+      setRequestStatus('success');
+    } catch (e) {
+      setRequestStatus('error');
+    }
 
     emailRef!.current!.value = '';
     nameRef!.current!.value = '';
@@ -47,6 +71,11 @@ function ContactForm() {
         <button>Send Message</button>
       </div>
     </form>
+    {notification && <Notification
+      status={notification.status}
+      title={notification.title}
+      message={notification.message}
+    />}
   </section>
 }
 
