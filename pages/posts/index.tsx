@@ -1,9 +1,16 @@
+import Head from "next/head";
 import AllPosts from "../../components/AllPosts/AllPosts";
 import { getAllPosts } from "../../helpers/post";
 
 
 function AllPostsPage({ posts }) {
-  return <AllPosts posts={posts} />
+  return <>
+    <Head>
+      <title>All Posts</title>
+      <meta name="description" content="All posts about development"/>
+    </Head>
+    <AllPosts posts={posts} />
+  </>
 }
 
 export function getStaticProps() {
