@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import Notification from '../Notification/Notification';
 import style from './Contacts.module.scss';
 import { useNotification } from '../../hooks/useNotification';
@@ -24,13 +24,13 @@ const sendMessage = async (email: string, name: string, message: string) => {
 }
 
 function ContactForm() {
-  const emailRef = useRef();
-  const nameRef = useRef();
-  const messageRef = useRef();
+  const emailRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const nameRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const messageRef = useRef() as React.MutableRefObject<HTMLTextAreaElement>;
 
   const [notification, setRequestStatus] = useNotification();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
 
     try {
