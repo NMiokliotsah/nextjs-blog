@@ -8,11 +8,27 @@
 
   ul {
     display: flex;
+    align-items: center;
     gap: 25px;
     color: white;
     font-size: 20px;
 
     a:hover {
+      color: #bbb;
+    }
+  }
+
+  .logout {
+    font: inherit;
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    font-weight: bold;
+    padding: 0.5rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+
+    &:hover {
       color: #bbb;
     }
   }
