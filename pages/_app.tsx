@@ -1,12 +1,10 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import { SessionProvider } from "next-auth/react";
 import Layout from '../components/Layout/Layout';
-import { SessionProvider, useSession } from "next-auth/react";
+import Auth from '../components/Auth/Auth';
 
 import '../styles/globals.css';
-import AuthPage from './auth';
-import React from 'react';
-
 
 export default function App({
   Component,
@@ -22,18 +20,4 @@ export default function App({
       </Auth>
     </Layout>
   </SessionProvider >
-}
-
-interface AuthProps {
-  children?: React.ReactNode,
-}
-
-function Auth({ children }: AuthProps) {
-  const { data: session } = useSession();
-
-  if (!session) {
-    return <AuthPage />
-  }
-
-  return children;
 }
