@@ -1,5 +1,6 @@
 import { signOut } from "next-auth/react"
 import { useRouter } from "next/router";
+import React from "react";
 
 import style from './LoginButton.module.scss';
 
@@ -10,11 +11,13 @@ interface LoginButtonProps {
 function LoginButton({ text }: LoginButtonProps) {
   const router = useRouter();
 
-  const handleLogoutButton = () => {
+  const handleLogoutButton = (e: React.MouseEvent) => {
+    e.preventDefault();
     signOut();
   }
 
-  const handleLoginButton = () => {
+  const handleLoginButton = (e: React.MouseEvent) => {
+    e.preventDefault();
     router.replace('/auth');
   }
 

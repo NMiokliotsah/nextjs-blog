@@ -51,6 +51,7 @@ function AuthForm() {
         }
       } else {
         await createUser(email, password);
+        switchAuthModeHandler();
       }
     } catch (error) {
       console.error(error)
