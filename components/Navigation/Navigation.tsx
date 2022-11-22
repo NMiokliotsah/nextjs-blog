@@ -16,6 +16,7 @@ function Navigation() {
         {session ? <>
           <li><Link href='/posts'>Posts</Link></li>
           <li><Link href='/contact'>Contact</Link></li>
+          <li><Link href='/profile'>Profile</Link></li>
           <li>
             <LoginButton text='Logout' />
           </li>

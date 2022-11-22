@@ -1,9 +1,11 @@
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getSession } from "next-auth/react"
 import AuthForm from "../../components/Auth/AuthForm";
 
 function AuthPage() {
+  const [isLoading, setLoadingState] = useState<boolean>(true);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -11,9 +13,15 @@ function AuthPage() {
       .then(session => {
         if (session) {
           router.replace('/');
+        } else {
+          setLoadingState(false);
         }
       });
   }, [router]);
+
+  if (isLoading) {
+    return <></>
+  }
 
   return <AuthForm />
 }
