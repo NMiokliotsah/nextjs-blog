@@ -2,11 +2,13 @@ import Head from 'next/head';
 import FeaturedPosts from '../components/FeaturedPosts/FeaturedPosts';
 import Hero from '../components/Hero/Hero';
 import { getFeaturedPosts } from '../helpers/post';
+import { IPost } from '../models/posts';
 
-import styles from '../styles/Home.module.css'
+interface HomeProps {
+  posts: IPost[],
+}
 
-
-function Home({ posts }) {
+function Home({ posts }: HomeProps) {
   return <>
     <Head>
       <title>My Blog</title>
@@ -16,7 +18,6 @@ function Home({ posts }) {
     <FeaturedPosts posts={posts} />
   </>
 }
-
 
 export function getStaticProps() {
   const featuredPosts = getFeaturedPosts();

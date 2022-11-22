@@ -1,12 +1,11 @@
 import Link from "next/link";
-import { signOut } from "next-auth/react"
+import { useSession } from "next-auth/react"
 import Logo from "../Logo/Logo";
 import style from './Navigation.module.scss';
+import LoginButton from "../../shared/ui/LoginButton/LoginButton";
 
 function Navigation() {
-  const handleLogoutButton = () => {
-    signOut();
-  }
+  const { data: session } = useSession();
 
   return <header className={style.blogHeader}>
     <Link href='/'>
@@ -14,14 +13,20 @@ function Navigation() {
     </Link>
     <nav>
       <ul>
-        <li><Link href='/posts'>Posts</Link></li>
-        <li><Link href='/contact'>Contact</Link></li>
-        <li>
-          <button onClick={handleLogoutButton} className={style.logout}>Logout</button>
-        </li>
+        {session ? <>
+          <li><Link href='/posts'>Posts</Link></li>
+          <li><Link href='/contact'>Contact</Link></li>
+          <li>
+            <LoginButton text='Logout' />
+          </li>
+        </>
+          : <li>
+            <LoginButton text='Login' />
+          </li>
+        }
       </ul>
     </nav>
-  </header>
+  </header >
 }
 
 export default Navigation;
