@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { getHashPassword } from '../../../helpers/auth';
 
 import { closeConnectionDb, connectToDatabase } from "../../../helpers/db";
+import { checkEmail, checkPassword } from '../../../helpers/validation';
 
 interface Data {
   message: string
@@ -10,7 +11,7 @@ interface Data {
 async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
   const data = req.body;
   const { email, password } = data;
-  const isNotValid = !email || !email.includes('@') || !password || password.trim() === '' || password.trim().length < 7;
+  const isNotValid = checkEmail(email) || checkPassword(password);
 
   if (isNotValid) {
     res

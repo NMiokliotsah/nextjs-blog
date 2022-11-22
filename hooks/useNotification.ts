@@ -1,22 +1,22 @@
 import { useEffect, useState } from 'react';
 
-const notificationTypes = ['pending', 'success', 'error'];
+const notificationTypes = ['success', 'error'];
 
 const notifications = {
   'pending': {
     status: 'pending',
-    title: 'Sending a message...',
-    message: 'Your message is on its way',
+    title: 'In progress...',
+    message: 'We are doing clever things!',
   },
   'success': {
     status: 'success',
     title: 'Success!',
-    message: 'Message sent successfully',
+    message: 'Operation is success!',
   },
   'error': {
     status: 'error',
     title: 'Error!',
-    message: 'Something went wrong',
+    message: 'Something went wrong!',
   }
 }
 
