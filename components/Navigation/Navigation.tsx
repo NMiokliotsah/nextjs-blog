@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react"
 import Logo from "../Logo/Logo";
 import style from './Navigation.module.scss';
-import LoginButton from "../../shared/ui/LoginButton/LoginButton";
+import LoginButton from "../../shared/ui/LoginButton";
 
 function Navigation() {
   const { data: session } = useSession();

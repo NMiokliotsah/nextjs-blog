@@ -1,7 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { signIn } from "next-auth/react"
-import styles from './AuthForm.module.scss';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
+
+import style from './AuthForm.module.scss';
 
 const createUser = async (email: string, password: string) => {
   const data = await fetch('api/auth/signup', {
@@ -13,7 +15,7 @@ const createUser = async (email: string, password: string) => {
     headers: {
       'Content-Type': 'application/json',
     }
-  }) ;
+  });
 
   if (!data.ok) {
     throw new Error(data.message || 'Something went wrong')
@@ -23,7 +25,9 @@ const createUser = async (email: string, password: string) => {
 }
 
 function AuthForm() {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState<boolean>(true);
+  const [isLoading, setLoadingSate] = useState<boolean>(false);
+
   const emailRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const passwordRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
@@ -39,6 +43,7 @@ function AuthForm() {
     const password = passwordRef.current.value;
 
     try {
+      setLoadingSate(true);
       if (isLogin) {
         const result = await signIn('credentials', {
           redirect: false,
@@ -55,26 +60,37 @@ function AuthForm() {
       }
     } catch (error) {
       console.error(error)
+    } finally {
+      setLoadingSate(false);
     }
   }
 
   return (
-    <section className={styles.auth}>
+    <section className={style.auth}>
       <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
       <form onSubmit={handleSubmitForm}>
-        <div className={styles.control}>
+        <div className={style.control}>
           <label htmlFor='email'>Email:</label>
           <input ref={emailRef} type='email' id='email' required />
         </div>
-        <div className={styles.control}>
+        <div className={style.control}>
           <label htmlFor='password'>Password:</label>
           <input ref={passwordRef} type='password' id='password' required />
         </div>
-        <div className={styles.actions}>
-          <button>{isLogin ? 'Login' : 'Create Account'}</button>
+        <div className={style.actions}>
+          <button className={style.loginButton}>
+            {isLogin ? 'Login' : 'Create Account'}
+            {isLoading && <Image
+              className={style.spinner}
+              src='/images/spinner.svg'
+              width={25}
+              height={25}
+              alt='spinner'
+            />}
+          </button>
           <button
             type='button'
-            className={styles.toggle}
+            className={style.toggle}
             onClick={switchAuthModeHandler}
           >
             {isLogin ? 'Create new account' : 'Login with existing account'}
